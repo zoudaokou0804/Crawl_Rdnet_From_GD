@@ -1,14 +1,15 @@
 # 获取代理头的方法
 from fake_useragent import UserAgent
-import requests
+import requests,json
 from get_proxyi_ip_one import get_proxyip, getheaders
 
-'''代理IP地址（高匿）'''
-proxy = get_proxyip()
+
 head = getheaders()
-'''http://icanhazip.com会返回当前的IP地址'''
-p = requests.get('https://ditu.amap.com/detail/get/detail?id=B0FFGQ7PQK', headers=head, proxies=proxy)
-# p = requests.get('https://ditu.amap.com/detail/get/detail?id=B0FFGQ7PQK', headers=head)
-print(p.text)
-# AG=UserAgent().random
-# print(AG)
+
+response = requests.get('https://www.amap.com/search?query=三环路&city=330600&geoobj=120.858034%7C29.993051%7C120.898681%7C30.031841&zoom=14.02')
+# print(response.text)
+print(response.headers)
+
+cookie = requests.utils.dict_from_cookiejar(response.cookies)
+cookies_str = json.dumps(cookie)
+print(cookies_str)

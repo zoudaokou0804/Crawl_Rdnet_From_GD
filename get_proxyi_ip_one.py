@@ -47,11 +47,14 @@ def get_proxyip(url='https://ip.jiangxianli.com/api/proxy_ip'):
     port=data['data']['port']
     htp_type=data['data']['protocol']
     ip_port=ip+':'+port
-    print(ip_port)
+    
     # 不能显示ip的原因
     proxy={}
-    proxy['http']='http://'+ip_port
+    # 根据爬取的网站类型定
+    # proxy['http']='http://'+ip_port
     proxy['https']='https://'+ip_port
+    print(proxy)
+    print(getheaders())
     return proxy
 
 if __name__ == "__main__":

@@ -1,11 +1,13 @@
-https://restapi.amap.com/v3/place/text?types=190301&city=021&output=xml&offset=1&page=1&key=0662e29ae686aed5e0e3d13902aef81c&extensions=all
+https://restapi.amap.com/v3/place/text?types=190301&city=021&output=json&offset=20&page=1&key=0662e29ae686aed5e0e3d13902aef81c&extensions=all
 提取数据的api
 
 https://lbs.amap.com/api/webservice/guide/api/search/
 API讲解
 
-https://ditu.amap.com/detail/get/detail?id=BZA1QT00F3
+https://ditu.amap.com/detail/get/detail?id=B00155P5PX
 根据唯一ID查询具体信息
+
+https://www.amap.com/place/BZ9IQZ00DZ
 
 
 获取高德地图瓦片的链接

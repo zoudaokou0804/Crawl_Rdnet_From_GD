@@ -27,7 +27,7 @@ def get_detail_json(id):
     head['accept']='text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
     head['accept-encoding']='gzip, deflate, br'
     head['accept-language']='zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6'
-    head['cookie']='guid=6f6c-9e1d-9302-25b4; UM_distinctid=174d9ae6fddda0-0d7c0de175d45-293e1d4e-1fa400-174d9ae6fdfd99; cna=mXAMF4PZzmICAd5C7SQ6bLCt; isg=BOrqT3YYQdawL806ukGJtcPOM1CMW261UrVkT3ShAD3Ip4xhXOiixBcZN1G7TOZN; l=eBPaXM27O18mD2eABO5Zourza77t3QR1hkPzaNbMiInca6NViF1ulNQ4o-xBrdtfMt5cpetzt0ss5REDSSa38O9-NuHk3YLEVwvwSe1..; tfstk=clslBbqNBa8SUuU2Xut5C4vNBF6haOiesMSf0imUWyHXulIBKsKKR8wbhpFGYM5..; xlly_s=1; CNZZDATA1255626299=1182552343-1601379807-%7C1601379807; x5sec=7b22617365727665723b32223a223032343338323065653238666665633034333834306239633136663730616231434c48417a507346454f374d787358516a4c71394b773d3d227d'
+    head['cookie']='guid=132c-26ee-3b02-ea79; UM_distinctid=174dcb58dd7c16-06357c9002c746-333376b-1fa400-174dcb58dd8c51; cna=wNL6F5gPNRQCAd5GxBZJVe2R; xlly_s=1; CNZZDATA1255626299=485837329-1601428281-%7C1601449885; x5sec=7b22617365727665723b32223a223537366134373165343335393965653439613864313065623166383862616361434d4872305073464549372b344d7a6531752f4663413d3d227d; isg=BEdHrSLN1Kpf51Ah7aRwYYSx1vsRTBsuzfa4Ohk0Llb9iGZKIB-3fzGOKkjWYPOm; tfstk=ctOhB3wvqpWCxxBMhX1BlRphFsdhZTPPmQR6_CVfqZeGH6RNi1ya3fE-SMxHw81..; l=eBLehBdnO1W5XFLMBOfwnurza77OtIRfguPzaNbMiOCPOo1w5h6GWZz8TV8eCnGVnsU9J3RSn5QgBoYg3yz3lCDsb7FFJl9aCdTh.'
     head['sec-fetch-dest']='document'
     head['sec-fetch-mode']='navigate'
     head['sec-fetch-site']='none'
@@ -41,5 +41,5 @@ def get_detail_json(id):
     print(name)
     return name
 if __name__ == "__main__":
-    id='B00155P5PX'
+    id='B0FFGWKQJR'
     get_detail_json(id)

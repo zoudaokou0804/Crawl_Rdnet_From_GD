@@ -38,6 +38,12 @@ def get_pois_id(poi_type,citycode):
         namedict_all.update(get_poi_name(url)) # 合并所有页的字典
     print(namedict_all)
 
+## 后续实现周边搜索
+
+## 后续实现多边形搜索
+
+## 后续实现id查询
+
 if __name__ == "__main__":
     poi_type='190301'   # 兴趣点类别，详见excel文件分类
     citcode='310114'      # 城市区域代码，详见excel文件
