@@ -71,8 +71,8 @@ def verify_and_get_new_cookies():
   print('自动化测试结束......')
   return cookies_str
   # 停留1s后自动关闭浏览器
-  sleep(1)
-  driver.close()
+  # sleep(1)
+  # driver.close()
 
 if __name__ == "__main__":
     verify_and_get_new_cookies()

@@ -45,6 +45,6 @@ def get_pois_id(poi_type,citycode):
 ## 后续实现id查询
 
 if __name__ == "__main__":
-    poi_type='190301'   # 兴趣点类别，详见excel文件分类
+    poi_type='190301'   # 兴趣点类别，详见excel文件分类，此处代表道路
     citcode='310114'      # 城市区域代码，详见excel文件
     get_pois_id(poi_type,citcode)
