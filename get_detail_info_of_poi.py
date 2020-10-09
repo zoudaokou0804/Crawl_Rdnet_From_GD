@@ -62,7 +62,9 @@ def get_detail_info(id):
         # print(name)
         # print(route_list)
         road_data=[] #一条道路的数据集合，包含道路上所有路段的数据集合
+        i=1 # 路段编号
         for path in route_list:
+            
             path_data=[]
             lat_lon_list=path.split(';')
             longitude_x=lat_lon_list[0].split(',')[0]
@@ -77,10 +79,11 @@ def get_detail_info(id):
                     road_level=road['level']  # 道路等级
                     road_width=road['width']  # 道路宽度
                     break # 跳出循环
-            path_data=[path,road_level,road_width] # 道路上一条路段的数据集合，包含路径坐标。道路等级，道路宽度
+            path_data=[i,name,path,road_level,road_width] # 道路上一条路段的数据集合，包含路径坐标。道路等级，道路宽度
+            i=i+1
             road_data.append(path_data)
             # print(path_data)
-        print(road_data)
+        # print(road_data)
         return road_data
 
     except:
@@ -90,5 +93,5 @@ def get_detail_info(id):
         get_detail_info(id)
     
 if __name__ == "__main__":
-    id='BZAGQY00VX'
+    id='B0FFH02F0P'
     get_detail_info(id)

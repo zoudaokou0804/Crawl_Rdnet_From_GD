@@ -1,7 +1,5 @@
-path='cookies.txt'
-with open(path,'r',encoding='utf-8') as f:
-    cookies=f.read()
-    print(cookies)
-path2='cookies2.txt'
-with open(path2,'w',encoding='utf-8') as f:
-        f.write('测试测试2')
+import os
+filename=road_data[0][1]+'.txt'
+with open(filename,'w',encoding='utf-8') as f:
+    f.write('link_id,road_name,lon,lat,road_level,road_width')
+# for link in data:
