@@ -15,10 +15,12 @@ import requests
 from get_proxyi_ip_one import get_proxyip, getheaders
 from get_new_cookies import verify_and_get_new_cookies
 import json
+import os
 
 # 获取txt文件中的cookies字符串
 def load_cookies():
-    with open('cookies.txt','r',encoding='utf-8') as f:
+    cur_dir_pth=os.path.dirname(os.path.abspath(__file__))
+    with open(cur_dir_pth+'\\cookies.txt','r',encoding='utf-8') as f:
         cookies=f.read()
         # print(cookies)
     return cookies
@@ -43,7 +45,7 @@ def get_detail_info(id):
     head['accept']='text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
     head['accept-encoding']='gzip, deflate, br'
     head['accept-language']='zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6'
-    head['cookie']=load_cookies()
+    head['cookie']=verify_and_get_new_cookies()
     head['sec-fetch-dest']='document'
     head['sec-fetch-mode']='navigate'
     head['sec-fetch-site']='none'
@@ -83,7 +85,7 @@ def get_detail_info(id):
             i=i+1
             road_data.append(path_data)
             # print(path_data)
-        # print(road_data)
+        print('路段数：'+len(road_data))
         return road_data
 
     except:
@@ -93,5 +95,5 @@ def get_detail_info(id):
         get_detail_info(id)
     
 if __name__ == "__main__":
-    id='B0FFH02F0P'
+    id='BZAHR100GZ'
     get_detail_info(id)
