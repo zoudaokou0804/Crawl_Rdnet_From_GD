@@ -12,8 +12,9 @@ import requests,json
 import time
 import math
 # 读取每一页中所有兴趣点的名称
+requests.packages.urllib3.disable_warnings()
 def get_poi_name(url):
-    rsp=requests.get(url)
+    rsp=requests.get(url,verify=False)
     data=json.loads(rsp.text)
     namedict={}
     for i in range(len(data['pois'])):
@@ -26,7 +27,7 @@ def get_pois_id(poi_type,citycode):
     onepage_num='20' # 每一页显示的兴趣点个数
     page_num='1' # 显示第多少页
     url='https://restapi.amap.com/v3/place/text?types=%s&city=%s&output=json&offset=%s&page=%s&key=%s&extensions=all'%(poi_type,citycode,onepage_num,page_num,key)
-    rsp=requests.get(url)
+    rsp=requests.get(url,verify=False)
     data=json.loads(rsp.text)
     num=int(data['count'])
     page_numbs=math.ceil(num/int(onepage_num)) # 计算总共多少页，后面构建每一页的url，读取每一页的数据

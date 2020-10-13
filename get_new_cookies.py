@@ -15,11 +15,15 @@ https://blog.csdn.net/kzl_knight/article/details/106613495?utm_medium=distribute
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from time import sleep
-
+import os
+# 将新获得的cookie字符串写入txt文件中
+def update_cookies(cookies):
+    with open('cookies.txt','w',encoding='utf-8') as f:
+        f.write(cookies)
 def verify_and_get_new_cookies():
   print('自动化测试开始.......')
   options = webdriver.ChromeOptions()
-
+  options.add_argument('verify=False')
   options.add_argument('--no-sandbox')  # 解决DevToolsActivePort文件不存在的报错
   options.add_argument('window-size=1920x1080')  # 指定浏览器分辨率
   options.add_argument('--disable-gpu')  # 谷歌文档提到需要加上这个属性来规避bug
@@ -31,7 +35,8 @@ def verify_and_get_new_cookies():
   options.add_experimental_option("excludeSwitches", ["enable-automation"])
   options.add_experimental_option('excludeSwitches', ['enable-logging'])
   options.add_experimental_option('useAutomationExtension', False)
-  driver = webdriver.Chrome(options=options, executable_path='./chromedriver')
+  cur_dir_pth=os.path.dirname(os.path.abspath(__file__))
+  driver = webdriver.Chrome(options=options, executable_path=cur_dir_pth+'\\chromedriver')
   driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
     "source": """
       Object.defineProperty(navigator, 'webdriver', {
@@ -46,17 +51,22 @@ def verify_and_get_new_cookies():
   driver.get('https://www.amap.com/place/BZ9IQZ00DZ')
 
   driver.maximize_window()  # 最大化浏览器窗口，必须要加这句话，不然在缩放窗口下自动拖拽滑块后依然无法通过
-
-  # sleep(1)
-  # 获取滑块位置
-  driver.switch_to.frame(driver.find_element_by_xpath("//iframe[contains(@id,'sufei-dialog-content')]"))
-  sour=driver.find_element_by_css_selector("#nc_1_n1z")
-  ele=driver.find_element_by_css_selector("#nc_1__scale_text > span")
-  # print(sour)
-  # print(ele)
-  # 拖动滑块
-  ActionChains(driver).drag_and_drop_by_offset(sour,ele.size['width'],-sour.size['height']).perform()
-
+  try:
+    # sleep(1)
+    # 获取滑块位置
+    driver.switch_to.frame(driver.find_element_by_xpath("//iframe[contains(@id,'sufei-dialog-content')]"))
+    sour=driver.find_element_by_css_selector("#nc_1_n1z")
+    ele=driver.find_element_by_css_selector("#nc_1__scale_text > span")
+    # print(sour)
+    # print(ele)
+    # 拖动滑块
+    action = ActionChains(driver)
+    action.click_and_hold(sour).perform()
+    # ActionChains(driver).drag_and_drop_by_offset(sour,ele.size['width'],-sour.size['height']).perform()
+    ActionChains(driver).drag_and_drop_by_offset(sour,400,0).perform()
+  except:
+    print('无需验证......')
+    
   cookies_list=driver.get_cookies()
   cookies_str=''
   # 以下打印cookie列表中每一项的名称和值
@@ -68,13 +78,13 @@ def verify_and_get_new_cookies():
     # print(name_vaule)
     cookies_str+=name_vaule
   print(cookies_str)
-  # # 停留1s后自动关闭浏览器
-  sleep(0.5)
-  driver.close()
   print('自动化测试结束......')
-
-  return cookies_str
+  update_cookies(cookies_str)
+  sleep(1)
+  driver.close()
+  # return cookies_str
 
 
 if __name__ == "__main__":
     verify_and_get_new_cookies()
+    print('...................................')

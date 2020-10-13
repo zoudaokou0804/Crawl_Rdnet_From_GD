@@ -16,7 +16,7 @@ from get_proxyi_ip_one import get_proxyip, getheaders
 from get_new_cookies import verify_and_get_new_cookies
 import json
 import os
-
+requests.packages.urllib3.disable_warnings()
 # 获取txt文件中的cookies字符串
 def load_cookies():
     cur_dir_pth=os.path.dirname(os.path.abspath(__file__))
@@ -52,47 +52,42 @@ def get_detail_info(id):
     head['upgrade-insecure-requests']='1'
     # 下面这个是隐藏的api接口提取兴趣点详细信息，官网未公布，自己摸索
     url='https://ditu.amap.com/detail/get/detail?id=%s'%id
-    p = requests.get(url, headers=head)
+    p = requests.get(url, headers=head,verify=False)
     # print(p.text)
     json_data=json.loads(p.text)
-    try:
-        name=json_data['data']['base']['name']
-        try:
-            route_list=json_data['data']['spec']['mining_shape']['shape'].split('|') # 单条道路所有分段集合
-        except:
-            route_list=[json_data['data']['spec']['mining_shape']['shape']]
-        # print(name)
-        # print(route_list)
-        road_data=[] #一条道路的数据集合，包含道路上所有路段的数据集合
-        i=1 # 路段编号
-        for path in route_list:
-            
-            path_data=[]
-            lat_lon_list=path.split(';')
-            longitude_x=lat_lon_list[0].split(',')[0]
-            latitude_y=lat_lon_list[0].split(',')[1]
-            # 根据路径起点坐标构建新的url获取道路的等级及宽度等信息
-            url='https://www.amap.com/service/regeo?longitude=%s&latitude=%s'%(longitude_x,latitude_y)
-            rego = requests.get(url, headers=head)
-            jd=json.loads(rego.text)    
-            roadlist=jd['data']['road_list']
-            for road in roadlist:
-                if road['name']==name:
-                    road_level=road['level']  # 道路等级
-                    road_width=road['width']  # 道路宽度
-                    break # 跳出循环
-            path_data=[i,name,path,road_level,road_width] # 道路上一条路段的数据集合，包含路径坐标。道路等级，道路宽度
-            i=i+1
-            road_data.append(path_data)
-            # print(path_data)
-        print('路段数：'+len(road_data))
-        return road_data
 
-    except:
-        print('需要重新设置cookies，才能继续爬取数据')
-        new_cookies=verify_and_get_new_cookies()
-        update_cookies(new_cookies)
-        get_detail_info(id)
+    name=json_data['data']['base']['name']
+
+    route_list=json_data['data']['spec']['mining_shape']['shape'].split('|') # 单条道路所有分段集合
+
+    # print(name)
+    # print(route_list)
+    road_data=[] #一条道路的数据集合，包含道路上所有路段的数据集合
+    i=1 # 路段编号
+    for path in route_list:
+        
+        path_data=[]
+        lat_lon_list=path.split(';')
+        longitude_x=lat_lon_list[0].split(',')[0]
+        latitude_y=lat_lon_list[0].split(',')[1]
+        # 根据路径起点坐标构建新的url获取道路的等级及宽度等信息
+        requests.packages.urllib3.disable_warnings()
+        url='https://www.amap.com/service/regeo?longitude=%s&latitude=%s'%(longitude_x,latitude_y)
+        rego = requests.get(url, headers=head,verify=False)
+        jd=json.loads(rego.text)    
+        roadlist=jd['data']['road_list']
+        for road in roadlist:
+            if road['name']==name:
+                road_level=road['level']  # 道路等级
+                road_width=road['width']  # 道路宽度
+                break # 跳出循环
+        path_data=[i,name,path,road_level,road_width] # 道路上一条路段的数据集合，包含路径坐标。道路等级，道路宽度
+        i=i+1
+        road_data.append(path_data)
+        # print(path_data)
+        print('路段数：'+str(len(road_data)))
+        print(road_data)
+        return road_data
     
 if __name__ == "__main__":
     id='BZAHR100GZ'
