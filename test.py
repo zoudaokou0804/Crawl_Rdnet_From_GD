@@ -50,8 +50,12 @@ def get_detail_info(id):
     head['sec-fetch-mode']='navigate'
     head['sec-fetch-site']='none'
     head['upgrade-insecure-requests']='1'
+
     # 下面这个是隐藏的api接口提取兴趣点详细信息，官网未公布，自己摸索
+    
     url='https://ditu.amap.com/detail/get/detail?id=%s'%id
+    # proxy=get_proxyip()
+    # p = requests.get(url, headers=head,verify=False,proxies=proxy)
     p = requests.get(url, headers=head,verify=False)
     # print(p.text)
     json_data=json.loads(p.text)
