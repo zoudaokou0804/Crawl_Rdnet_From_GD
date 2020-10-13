@@ -92,6 +92,7 @@ def get_detail_info(id):
         # update_cookies(new_cookies)
         get_detail_info(id)
     print('路段数：'+str(len(road_data)))
+    # print(road_data)
     return road_data
     
 if __name__ == "__main__":
