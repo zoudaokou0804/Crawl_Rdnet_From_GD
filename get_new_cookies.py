@@ -26,7 +26,9 @@ def update_cookies(cookies):
 
 def verify_and_get_new_cookies():
     print('自动化测试开始.......')
+
     options = webdriver.ChromeOptions()
+    options.add_argument('start-maximized') # 默认最大化打开，替代driver.maximize_window()
     options.add_argument('verify=False')
     options.add_argument('--no-sandbox')  # 解决DevToolsActivePort文件不存在的报错
     options.add_argument('window-size=1920x1080')  # 指定浏览器分辨率
@@ -57,7 +59,7 @@ def verify_and_get_new_cookies():
     # sleep(1)
     driver.get('https://www.amap.com/place/BZ9IQZ00DZ')
 
-    driver.maximize_window()  # 最大化浏览器窗口，必须要加这句话，不然在缩放窗口下自动拖拽滑块后依然无法通过
+    # driver.maximize_window()  # 最大化浏览器窗口，必须要加这句话，不然在缩放窗口下自动拖拽滑块后依然无法通过
     try:
         # sleep(1)
         # 获取滑块位置
