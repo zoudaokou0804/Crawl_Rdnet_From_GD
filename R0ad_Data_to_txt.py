@@ -11,7 +11,8 @@
 from get_detail_info_of_poi import get_detail_info
 import os
 
-def data_write_to_txt(road_data):
+def data_write_to_txt(id):
+    road_data=get_detail_info(id)
     records_list=[]
     records_list3=[]
     in_road_index=1
@@ -38,5 +39,4 @@ def data_write_to_txt(road_data):
     print(records_list3)
 if __name__ == "__main__":
     id='BZAHR100GZ'
-    road_data=get_detail_info(id)
-    data_write_to_txt(road_data)
+    data_write_to_txt(id)
