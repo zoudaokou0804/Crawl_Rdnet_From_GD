@@ -31,13 +31,18 @@ def get_pois_id(poi_type,citycode):
     data=json.loads(rsp.text)
     num=int(data['count'])
     page_numbs=math.ceil(num/int(onepage_num)) # 计算总共多少页，后面构建每一页的url，读取每一页的数据
-    print(num)
-    print(page_numbs)
+    print('总计%s条道路数据'%str(num))
+    # print(page_numbs)
     namedict_all={} # 所查询区域所有兴趣点名称列表
     for i in range(1,page_numbs+1):
         url='https://restapi.amap.com/v3/place/text?types=%s&city=%s&output=json&offset=%s&page=%s&key=%s&extensions=all'%(poi_type,citycode,onepage_num,i,key)
         namedict_all.update(get_poi_name(url)) # 合并所有页的字典
     print(namedict_all)
+    
+    with open('poi_id_list.txt','w',encoding='utf-8') as f:
+        for key,value in namedict_all.items():
+            f.writelines(key+':'+value+'\n')
+    # return namedict_all
 
 ## 后续实现周边搜索
 
@@ -47,5 +52,5 @@ def get_pois_id(poi_type,citycode):
 
 if __name__ == "__main__":
     poi_type='190301'   # 兴趣点类别，详见excel文件分类，此处代表道路
-    citcode='310114'      # 城市区域代码，详见excel文件
+    citcode='310110'      # 城市区域代码，详见excel文件
     get_pois_id(poi_type,citcode)

@@ -79,8 +79,14 @@ def get_detail_info(id):
             roadlist=jd['data']['road_list']
             for road in roadlist:
                 if road['name']==name:
-                    road_level=road['level']  # 道路等级
-                    road_width=road['width']  # 道路宽度
+                    try:
+                        road_level=road['level']  # 道路等级
+                    except:
+                        road_level='-'
+                    try:
+                        road_width=road['width']  # 道路宽度
+                    except:
+                        road_width='-'
                     break # 跳出循环
             path_data=[i,name,path,road_level,road_width] # 道路上一条路段的数据集合，包含路径坐标。道路等级，道路宽度
             i=i+1

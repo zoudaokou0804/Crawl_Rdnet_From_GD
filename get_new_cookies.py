@@ -17,7 +17,23 @@ from selenium.webdriver.common.action_chains import ActionChains
 from time import sleep
 import os
 
+# 反复刷新并移动滑块操作
+def refresh_slide(driver):
+    refresh_btn = driver.find_element_by_css_selector("#nocaptcha > div > span > a")
+    refresh_btn.click()
+    sour = driver.find_element_by_css_selector("#nc_1_n1z")
+    ele = driver.find_element_by_css_selector("#nc_1__scale_text > span")
+    ActionChains(driver).click_and_hold(sour).perform()
+    ActionChains(driver).drag_and_drop_by_offset(sour, 500, 0).perform()  
 
+# 判断是否需要重复滑块操作
+def juge_slide(driver):
+    try:
+        search_btn = driver.find_element_by_css_selector("#searchbtn > i")
+        search_btn.click()
+        return 0
+    except:
+        return 1
 # 将新获得的cookie字符串写入txt文件中
 def update_cookies(cookies):
     with open('cookies.txt', 'w', encoding='utf-8') as f:
@@ -77,18 +93,18 @@ def verify_and_get_new_cookies():
         ActionChains(driver).drag_and_drop_by_offset(sour, 500, 0).perform()
         # 点击一次搜索按钮
         sleep(2)
-        try:
-            search_btn = driver.find_element_by_css_selector("#searchbtn > i")
-            search_btn.click()
-        except:
-            # driver.quit()
-            # driver.switch_to.frame(driver.find_element_by_xpath("//*[@id='themap']/iframe"))
-            refresh_btn = driver.find_element_by_css_selector("#nocaptcha > div > span > a")
-            refresh_btn.click()
-            sour = driver.find_element_by_css_selector("#nc_1_n1z")
-            ele = driver.find_element_by_css_selector("#nc_1__scale_text > span")
-            ActionChains(driver).click_and_hold(sour).perform()
-            ActionChains(driver).drag_and_drop_by_offset(sour, 500, 0).perform()  
+        result=juge_slide(driver)
+        while result==1:
+            refresh_slide(driver)
+            result=juge_slide(driver)
+        
+        # try:
+        #     search_btn = driver.find_element_by_css_selector("#searchbtn > i")
+        #     search_btn.click()
+        # except:
+        #     # driver.quit()
+        #     # driver.switch_to.frame(driver.find_element_by_xpath("//*[@id='themap']/iframe"))
+
     except:
         print('无需验证......')
     # 点击一次搜索按钮
